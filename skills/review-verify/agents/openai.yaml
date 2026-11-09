@@ -1,0 +1,7 @@
+interface:
+  display_name: "Review Verify"
+  short_description: "Review changes, then independently verify findings"
+  default_prompt: "Use $review-verify to review uncommitted changes and independently verify each finding."
+
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Review Verify Uncommitted"
+  short_description: "Standalone review of uncommitted work across sessions"
+  default_prompt: "Use $review-verify-uncommitted to review uncommitted changes without relying on session history, then independently verify the findings."
+
+policy:
+  allow_implicit_invocation: false
