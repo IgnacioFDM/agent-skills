@@ -1,13 +1,11 @@
 ---
 name: review-verify
-description: Review uncommitted changes by default in a fresh agent, then check each finding in a second fresh agent. Stops at the verdicts.
-argument-hint: "[PR, branch or path to review; default: uncommitted changes only]"
+description: Review the current changes in a fresh agent, then check each finding in a second fresh agent. Stops at the verdicts.
+argument-hint: "[PR, branch or path to review; default: changes since local main]"
 disable-model-invocation: true
 ---
 
 Run a review and then verify it, using a separate fresh agent for each so neither is influenced by this thread's work. Run each agent in the foreground and wait for it. Don't review or verify anything yourself, and don't edit any code during this skill.
-
-With no target, review only uncommitted changes: staged changes, unstaged changes, and untracked files. Previous commits, including unpushed commits, are excluded unless explicitly requested. If there are no uncommitted changes, report that there is nothing to review; do not fall back to a commit range.
 
 ## Starting the agents
 
@@ -40,7 +38,7 @@ If it reports no findings, tell the user and skip step 3.
 
 Start a second fresh agent with the `review-verifier.md` role and a prompt containing:
 
-- What was reviewed: the target given above, or else only uncommitted changes (staged, unstaged, and untracked files), excluding previous commits.
+- What was reviewed: the target given above, or else all commits since the local `main` branch, uncommitted changes and untracked files.
 - Your summary from step 1, labeled as the implementer's own account, to be checked rather than trusted.
 - The findings, verbatim.
 

@@ -16,22 +16,15 @@ change a copy; a fresh worktree won't contain uncommitted changes.
 
 ## Phase 0 — Gather the diff
 
-With no explicit target, review only uncommitted changes. Run `git diff HEAD`
-to include both staged and unstaged changes against the current commit. Also
-read the untracked files listed by `git ls-files --others --exclude-standard`
-as new code, because `git diff` does not show them. Respect repository rules
-for ignored, sensitive, and generated files.
-
-Do not include previous commits, even if they have not been pushed. If there
-are no uncommitted changes, return `[]`; do not fall back to an upstream diff,
-`main...HEAD`, or `HEAD~1`.
-
-An explicit path restricts this uncommitted scope to that path. For an explicit
-PR, branch, commit range, or request to review unpushed commits, resolve and
-review that requested scope instead. Include working-tree changes in such a
-review only when requested. Read surrounding code and callers as context,
-without expanding the review to unrelated changes. Treat the resolved diff
-and in-scope untracked files as the review scope.
+Run `git diff main...HEAD` against the local `main` branch, not the remote (or
+`git diff master...HEAD` if there's no local `main`, or `git diff HEAD~1` if
+neither exists) to get the unified diff under review. If there are
+uncommitted changes, or the range diff is empty, also run `git diff HEAD` and
+include the working-tree changes in scope — the review often runs before the
+commit. Also read the untracked files listed by `git ls-files --others
+--exclude-standard` in full, as new code, because `git diff` doesn't show them.
+If a PR number, branch name, file path, or other scope was passed as an
+argument, review that target instead. Treat this diff as the review scope.
 
 ## Phase 1 — Find candidates (3 correctness angles + 3 cleanup angles + 1 altitude angle + 1 conventions angle, up to 6 each)
 
